@@ -18,7 +18,6 @@ public class Question extends AbstractPersistable<Long> {
     @NotBlank
     protected String content;
 
-    @Lob
     @Length( max = 10000 )
     @Column( length = 100000 )
     public String getContent() {
