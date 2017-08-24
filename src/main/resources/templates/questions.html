@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>StackOverClone</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"/>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background-color: cornflowerblue;
+            display: flex;
+            align-items: center;
+        }
+        html, body {
+            height:100%;
+        }
+        .blue-text {
+            color: cornflowerblue;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card my-2">
+            <div class="row card-block">
+                <div class="col-12">
+                    <form class="form-horizontal">
+                        <div class="input-group">
+                            <input class="form-control" type="text" placeholder="Search not yet implemented..." disabled="disabled"/>
+                            <button class="btn btn-outline-success" type="submit" disabled="disabled">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card my-2" id="questions-list">
+            <div class="row card-block">
+                <div class="col-12">
+                    <ul class="list-group" th:each="question:${questions}">
+                        <li class="list-group-item flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1" th:text="${question.title}"> Question title</h5>
+                                <small>Frank Zappa</small>
+                            </div>
+                            <p th:text="${question.content}">
+                                Question content.
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
