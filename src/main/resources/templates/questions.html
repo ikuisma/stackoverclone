@@ -38,15 +38,24 @@
         <div class="card my-2" id="questions-list">
             <div class="row card-block">
                 <div class="col-12">
+                    <h1 class="card-title text-center"> Questions</h1>
+                </div>
+                <div class="col-12">
+
                     <ul class="list-group" th:each="question:${questions}">
                         <li class="list-group-item flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
                                 <h5 class="mb-1" th:text="${question.title}"> Question title</h5>
                                 <small>Frank Zappa</small>
                             </div>
-                            <p th:text="${question.content}">
+                            <p class="mb-0" th:text="${question.content}">
                                 Question content.
                             </p>
+                        </li>
+                    </ul>
+                    <ul class="list-group" th:if="${questions==null}">
+                        <li class="list-group-item flex-column justify-content-around ">
+                            <h3 class="mb-0 text-center align-items-center"> No questions found! </h3>
                         </li>
                     </ul>
                 </div>
