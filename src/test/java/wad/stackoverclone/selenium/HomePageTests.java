@@ -12,6 +12,8 @@ import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import wad.stackoverclone.selenium.pageobjects.HomePage;
+import wad.stackoverclone.selenium.pageobjects.QuestionsPage;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -34,12 +36,21 @@ public class HomePageTests extends FluentTest {
 
     @Page
     private HomePage homePage;
+    @Page
+    private QuestionsPage questionsPage;
 
     @Test
     public void userCanOpenPageAndSeeTitleOfApplication() {
         homePage.go();
         assertThat(homePage.getDriver().getTitle()).contains("StackOverClone");
         assertThat(homePage.getTextFromCard()).contains("StackOverClone");
+    }
+
+    @Test
+    public void clickingButtonRedirectsToQuestionsPage() {
+        homePage.go();
+        homePage.clickGoToQuestionsButton();
+        assertThat(questionsPage.questionsListIsVisible());
     }
 
 }
