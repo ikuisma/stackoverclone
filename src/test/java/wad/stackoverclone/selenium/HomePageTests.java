@@ -5,16 +5,13 @@ import org.fluentlenium.core.annotation.Page;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import wad.stackoverclone.selenium.pageobjects.HomePage;
 import wad.stackoverclone.selenium.pageobjects.LoginPage;
 import wad.stackoverclone.selenium.pageobjects.QuestionsPage;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -39,31 +36,29 @@ public class HomePageTests extends FluentTest {
     private LoginPage loginPage;
 
     @Page
-    private HomePage homePage;
-
-    @Page
     private QuestionsPage questionsPage;
 
     @Before
     public void setUp() {
+        setDeleteCookies(true);
     }
 
     @Test
-    public void userCanOpenPageAndSeeTitleOfApplication() {
+    public void userCanSeeQuestionsListAfterSuccessfulLogin() {
         loginPage.go();
         loginPage.login("Admin", "password1");
-        homePage.go();
-        assertThat(homePage.getDriver().getTitle()).contains("StackOverClone");
-        assertThat(homePage.getTextFromCard()).contains("StackOverClone");
-    }
-
-    @Test
-    public void clickingButtonRedirectsToQuestionsPage() {
-        loginPage.go();
-        loginPage.login("Admin", "password1");
-        homePage.go();
-        homePage.clickGoToQuestionsButton();
+        assertThat(questionsPage.getDriver().getTitle()).contains("StackOverClone");
         assertThat(questionsPage.questionsListIsVisible());
+    }
+
+    @Test
+    public void clickingLogoutButtonRedirectsBackToLoginPage() {
+        loginPage.go();
+        loginPage.login("Admin", "password1");
+        questionsPage.go();
+        assertThat(questionsPage.questionsListIsVisible());
+        questionsPage.clickLogout();
+        assertThat(loginPage.loginFormIsVisible());
     }
 
 }
