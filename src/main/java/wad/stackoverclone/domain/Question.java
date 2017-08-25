@@ -12,13 +12,17 @@ public class Question extends AbstractPersistable<Long> {
 
     @NotEmpty
     @NotBlank
+    @Length(min = 10, max = 100)
     private String title;
 
     @NotEmpty
     @NotBlank
-    @Length( max = 1000 )
+    @Length( min = 10, max = 1000 )
     @Column( length = 1000 )
     private String content;
+
+    @ManyToOne
+    private Account author;
 
     public String getContent() {
         return content;
@@ -34,6 +38,14 @@ public class Question extends AbstractPersistable<Long> {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Account getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Account author) {
+        this.author = author;
     }
 
 }

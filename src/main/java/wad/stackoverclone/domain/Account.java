@@ -6,6 +6,8 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import java.util.Set;
 
 @Entity
 public class Account extends AbstractPersistable<Long>{
@@ -18,6 +20,9 @@ public class Account extends AbstractPersistable<Long>{
     @NotBlank
     @Length(min = 6)
     private String password;
+
+    @OneToMany(mappedBy = "author")
+    Set<Question> questions;
 
     public String getUsername() {
         return username;
@@ -33,6 +38,14 @@ public class Account extends AbstractPersistable<Long>{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(Set<Question> questions) {
+        this.questions = questions;
     }
 
 }
