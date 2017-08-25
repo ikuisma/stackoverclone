@@ -52,7 +52,7 @@
                                 <li class="list-group-item flex-column align-items-start">
                                     <div class="d-flex w-100 justify-content-between">
                                         <h5 class="mb-1" th:text="${question.title}"> Question title</h5>
-                                        <small>Frank Zappa</small>
+                                        <small th:text="${question.author.username}"> Poster's name here</small>
                                     </div>
                                     <p class="mb-0" th:text="${question.content}">
                                         Question content.
