@@ -16,10 +16,10 @@ public class Question extends AbstractPersistable<Long> {
 
     @NotEmpty
     @NotBlank
-    protected String content;
+    @Length( max = 1000 )
+    @Column( length = 1000 )
+    private String content;
 
-    @Length( max = 10000 )
-    @Column( length = 100000 )
     public String getContent() {
         return content;
     }
