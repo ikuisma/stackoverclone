@@ -1,6 +1,7 @@
 package wad.stackoverclone.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,22 +26,26 @@ public class AccountService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @PreAuthorize("isAuthenticated()")
     public Account addAccount(Account account) {
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         return accountRepository.save(account);
     }
 
+    @PreAuthorize("isAuthenticated()")
     public boolean usernameIsTaken(Account account) {
         return (accountRepository.findAccountByUsername(account.getUsername()) != null);
     }
 
     @Transactional
+    @PreAuthorize("isAuthenticated()")
     public void addQuestion(Question q) {
         Account a = currentAccount();
         a.getQuestions().add(q);
         accountRepository.save(a);
     }
 
+    @PreAuthorize("isAuthenticated()")
     public Account currentAccount() {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if (authentication == null || !authentication.isAuthenticated()) {
