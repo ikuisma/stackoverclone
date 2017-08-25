@@ -37,7 +37,8 @@ public class SignupController {
             return "signup";
         }
         accountService.addAccount(account);
-        return "redirect:/login";
+        accountService.loginAccount(account);
+        return "redirect:/questions";
     }
 
 }
