@@ -51,7 +51,7 @@ public class LoginLogoutTests extends FluentTest{
     }
 
     @Test
-    public void successfulLogoutMessageShouldBeVisibleAfterLogginOut() {
+    public void successfulLogoutMessageShouldBeVisibleAfterLoggingOut() {
         loginPage.go();
         loginPage.login("Admin", "password1");
         questionsPage.clickLogout();
