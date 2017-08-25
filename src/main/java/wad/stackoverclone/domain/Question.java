@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Question extends AbstractPersistable<Long> {
@@ -23,6 +24,17 @@ public class Question extends AbstractPersistable<Long> {
 
     @ManyToOne
     private Account author;
+
+    @OneToMany(mappedBy = "question")
+    private Set<Answer> answers;
+
+    public Set<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(Set<Answer> answers) {
+        this.answers = answers;
+    }
 
     public String getContent() {
         return content;
