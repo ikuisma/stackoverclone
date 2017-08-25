@@ -2,8 +2,10 @@ package wad.stackoverclone.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -17,13 +19,18 @@ import javax.transaction.Transactional;
 public class AccountService {
 
     private final AccountRepository accountRepository;
-
     private final PasswordEncoder passwordEncoder;
+    private final CustomUserDetailsService customUserDetailsService;
 
     @Autowired
-    public AccountService(AccountRepository accountRepository, PasswordEncoder passwordEncoder) {
+    public AccountService(
+            AccountRepository accountRepository,
+            PasswordEncoder passwordEncoder,
+            CustomUserDetailsService customUserDetailsService
+    ) {
         this.accountRepository = accountRepository;
         this.passwordEncoder = passwordEncoder;
+        this.customUserDetailsService = customUserDetailsService;
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -52,6 +59,16 @@ public class AccountService {
                 return null;
             }
             return accountRepository.findAccountByUsername(authentication.getName());
+    }
+
+    public void loginAccount(Account account) {
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername(account.getUsername());
+        Authentication auth = new UsernamePasswordAuthenticationToken(
+                userDetails.getUsername(),
+                userDetails.getPassword(),
+                userDetails.getAuthorities()
+        );
+        SecurityContextHolder.getContext().setAuthentication(auth);
     }
 
 }
