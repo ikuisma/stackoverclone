@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>StackOverClone</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"/>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background-color: cornflowerblue;
+            display: flex;
+            align-items: center;
+        }
+        html, body {
+            height:100%;
+        }
+        .blue-text {
+            color: cornflowerblue;
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex row-12 align-items-center justify-content-centers container-fluid text-center">
+        <div class="d-flex col-12 container-fluid">
+            <div class="card card-block">
+                <div class="card-block">
+                    <h1 class="card-title blue-text"> StackOverClone</h1>
+                    <h3 class="card-subtitle blue-text">Sign up here, bucko!</h3>
+                    <div class="d-flex w-100 justify-content-center align-items-center pt-4">
+                        <form class="w-100" name="f" th:action="@{/signup}" th:object="${account}" action="#" method="POST">
+                            <div class="form-group row">
+                                <div class="col">
+                                    <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" id="invalid-username" class="text-danger" >Invalid username</span>
+                                    <input type="text" name="username" th:field="*{username}" class="form-control w-100" placeholder="Username"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col">
+                                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" id="invalid-password" class="text-danger" >Invalid password</span>
+                                    <input type="password" name="password" th:field="*{password}" class="form-control w-100" placeholder="Password"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/> -->
+                                    <button type="submit" class="btn btn-primary w-100">Sign up</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
