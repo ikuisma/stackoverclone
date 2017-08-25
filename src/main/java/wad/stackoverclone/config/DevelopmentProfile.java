@@ -3,7 +3,10 @@ package wad.stackoverclone.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import wad.stackoverclone.domain.Account;
 import wad.stackoverclone.domain.Question;
+import wad.stackoverclone.repository.AccountRepository;
 import wad.stackoverclone.repository.QuestionRepository;
 
 import javax.annotation.PostConstruct;
@@ -12,15 +15,31 @@ import javax.annotation.PostConstruct;
 @Profile("development")
 public class DevelopmentProfile {
 
+    private final QuestionRepository questionRepository;
+    private final AccountRepository accountRepository;
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    private QuestionRepository questionRepository;
+    public DevelopmentProfile(QuestionRepository questionRepository, AccountRepository accountRepository, PasswordEncoder passwordEncoder) {
+        this.questionRepository = questionRepository;
+        this.accountRepository = accountRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @PostConstruct
     public void init() {
-        questionRepository.save(QuestionCreator.zappaQuestion());
-        questionRepository.save(QuestionCreator.pandarusQuestion());
-        questionRepository.save(QuestionCreator.zappaQuestion());
-        questionRepository.save(QuestionCreator.pandarusQuestion());
+        createQuestions();
+        createUsers();
+    }
+
+    private void createUsers() {
+        Account admin = new Account();
+        admin.setUsername("Admin");
+        admin.setPassword(passwordEncoder.encode("password1"));
+        accountRepository.save(admin);
+    }
+
+    private void createQuestions() {
         questionRepository.save(QuestionCreator.zappaQuestion());
         questionRepository.save(QuestionCreator.pandarusQuestion());
     }
