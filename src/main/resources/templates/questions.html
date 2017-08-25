@@ -14,7 +14,7 @@
             align-items: center;
         }
         html, body {
-            height:100%;
+            height:100%
         }
         .blue-text {
             color: cornflowerblue;
@@ -22,42 +22,50 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="card my-2">
-            <div class="row card-block">
-                <div class="col-12">
-                    <form class="form-horizontal">
-                        <div class="input-group">
-                            <input class="form-control" type="text" placeholder="Search not yet implemented..." disabled="disabled"/>
-                            <button class="btn btn-outline-success" type="submit" disabled="disabled">Search</button>
+    <div class="container-fluid w-100 h-100">
+        <div class="row h-100 justify-content-around">
+            <div class="col-md-9 col-sm-12">
+                <div class="card my-2">
+                    <div th:replace="fragments/navbar"></div>
+                </div>
+                <div class="card my-2">
+                    <div class="row card-block">
+                        <div class="col-12 align-items-middle">
+                            <form class="form">
+                                <div class="row mx-1">
+                                    <input class="col-12 form-control my-2" type="text" placeholder="Search not yet implemented..." disabled="disabled"/>
+                                </div>
+                                <div class="row mx-1 justify-content-around">
+                                    <button class="col-12 btn btn-outline-success my-2" type="submit" disabled="disabled">Search</button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="card my-2" id="questions-list">
-            <div class="row card-block">
-                <div class="col-12">
-                    <h1 class="card-title text-center"> Questions</h1>
-                </div>
-                <div class="col-12">
-
-                    <ul class="list-group" th:each="question:${questions}">
-                        <li class="list-group-item flex-column align-items-start">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1" th:text="${question.title}"> Question title</h5>
-                                <small>Frank Zappa</small>
-                            </div>
-                            <p class="mb-0" th:text="${question.content}">
-                                Question content.
-                            </p>
-                        </li>
-                    </ul>
-                    <ul class="list-group" th:if="${questions==null}">
-                        <li class="list-group-item flex-column justify-content-around ">
-                            <h3 class="mb-0 text-center align-items-center"> No questions found! </h3>
-                        </li>
-                    </ul>
+                <div class="card my-2 align-items-start" id="questions-list">
+                    <div class="col card-block">
+                        <div class="w-100">
+                            <h1 class="card-title text-center"> Questions</h1>
+                        </div>
+                        <div class="h-100 w-100">
+                            <ul class="list-group" th:each="question:${questions}">
+                                <li class="list-group-item flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1" th:text="${question.title}"> Question title</h5>
+                                        <small>Frank Zappa</small>
+                                    </div>
+                                    <p class="mb-0" th:text="${question.content}">
+                                        Question content.
+                                    </p>
+                                </li>
+                            </ul>
+                            <ul class="list-group" th:if="${questions==null}">
+                                <li class="list-group-item flex-column justify-content-around ">
+                                    <h3 class="mb-0 text-center align-items-center"> No questions found! </h3>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
