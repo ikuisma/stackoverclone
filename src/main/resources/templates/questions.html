@@ -28,7 +28,7 @@
                 <div class="card my-2">
                     <div th:replace="fragments/navbar"></div>
                 </div>
-                <div class="card my-2">
+                <div style="display:none" class="card my-2">
                     <div class="row card-block">
                         <div class="col-12 align-items-middle">
                             <form class="form">
@@ -51,7 +51,7 @@
                             <ul class="list-group" th:each="question:${questions}">
                                 <li class="list-group-item flex-column align-items-start">
                                     <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1" th:text="${question.title}"> Question title</h5>
+                                        <a th:href="@{/questions/{id}(id=${question.id})}" class="h4 mb-1 link" th:text="${question.title}"> Question title</a>
                                         <small th:text="${question.author.username}"> Poster's name here</small>
                                     </div>
                                     <p class="mb-0" th:text="${question.content}">
