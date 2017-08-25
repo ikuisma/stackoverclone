@@ -3,11 +3,10 @@ package wad.stackoverclone.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import wad.stackoverclone.domain.Account;
 import wad.stackoverclone.domain.Question;
-import wad.stackoverclone.repository.AccountRepository;
 import wad.stackoverclone.repository.QuestionRepository;
+import wad.stackoverclone.service.AccountService;
 
 import javax.annotation.PostConstruct;
 
@@ -16,14 +15,14 @@ import javax.annotation.PostConstruct;
 public class DevelopmentProfile {
 
     private final QuestionRepository questionRepository;
-    private final AccountRepository accountRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final AccountService accountService;
 
     @Autowired
-    public DevelopmentProfile(QuestionRepository questionRepository, AccountRepository accountRepository, PasswordEncoder passwordEncoder) {
+    public DevelopmentProfile(
+            QuestionRepository questionRepository,
+            AccountService accountService) {
         this.questionRepository = questionRepository;
-        this.accountRepository = accountRepository;
-        this.passwordEncoder = passwordEncoder;
+        this.accountService = accountService;
     }
 
     @PostConstruct
@@ -35,8 +34,8 @@ public class DevelopmentProfile {
     private void createUsers() {
         Account admin = new Account();
         admin.setUsername("Admin");
-        admin.setPassword(passwordEncoder.encode("password1"));
-        accountRepository.save(admin);
+        admin.setPassword("password1");
+        accountService.addAccount(admin);
     }
 
     private void createQuestions() {
