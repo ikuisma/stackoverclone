@@ -30,6 +30,16 @@
                     <h3 class="card-subtitle blue-text">Hey there, buddy!</h3>
                     <div class="d-flex w-100 justify-content-center align-items-center pt-4">
                         <form class="w-100" name="f" th:action="@{/login}" method="post">
+                            <div class="form-group row" th:if="${param.error}">
+                                <div class="col">
+                                  <span id="invalid-creds" class="text-danger">Wrong username or password!</span>
+                                </div>
+                            </div>
+                            <div class="form-group row" th:if="${param.logout}">
+                                <div class="col">
+                                  <span id="logout-success" class="text-success">You've been logged out!</span>
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <div class="col">
                                     <input type="text" name="username" class="form-control w-100" id="username" placeholder="Username"/>
