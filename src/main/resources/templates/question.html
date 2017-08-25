@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>StackOverClone</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"/>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background-color: cornflowerblue;
+            display: flex;
+            align-items: center;
+        }
+        html, body {
+            height:100%
+        }
+        .blue-text {
+            color: cornflowerblue;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid w-100 h-100">
+        <div class="row h-100 justify-content-around">
+            <div class="col-xl-7 col-md-9 col-sm-12">
+                <div class="card my-2">
+                    <div th:replace="fragments/navbar"></div>
+                </div>
+                <div class="card my-2 align-items-start" id="questions">
+                    <div class="col card-block">
+                        <div class="w-100">
+                            <h5 class="card-title text-center"> Question</h5>
+                        </div>
+                        <div class="h-100 w-100">
+                            <ul class="list-group">
+                                <li class="list-group-item flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1" th:text="${question.title}"> Question title</h5>
+                                        <small th:text="${question.author.username}"> Poster's name here</small>
+                                    </div>
+                                    <p class="mb-0" th:text="${question.content}">
+                                        Question content.
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="card my-2 align-items-start" id="questions-list">
+                        <div class="col card-block">
+                            <div class="w-100">
+                                <h5 class="card-title text-center"> New answer</h5>
+                            </div>
+                            <form class="w-100" th:action="@{/questions/{id}/answers(id=${question.id})}" action="#" th:object="${answer}" th:method="POST">
+                                <div class="form-group row container">
+                                    <div class="col-12" >
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <row class="flexbox align-items-center flex-row d-flex justify-content-between px-2">
+                                            <label for="title" class="h5">Title</label>
+                                            <label id="title-error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="h6 text-danger text-center">Title error message</label>
+                                        </row>
+                                        <input th:field="*{title}" type="text" name="title" class="form-control w-100" id="title" placeholder=""/>
+                                    </div>
+                                </div>
+                                <div class="form-group row h-100 fluid-container">
+                                    <div class="col h-100">
+                                        <row class="flexbox align-items-center flex-row d-flex justify-content-between px-2">
+                                            <label for="txtarea" class="h5">Content</label>
+                                            <label id="content-error" th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="h6mvn  text-danger text-center"> Content error message</label>
+                                        </row>
+                                        <textarea th:field="*{content}" rows="5" cols="50" class="form-control h-100" name="content" id="txtarea" maxlength="1000" ></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row pt-3 align-middle">
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary w-100 h-100">Post</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card my-2 align-items-start" id="answers-list">
+                    <div class="col card-block">
+                        <div class="w-100">
+                            <h5 class="card-title text-center"> Answers</h5>
+                        </div>
+                        <div class="h-100 w-100">
+                            <ul class="list-group" th:each="answer:${question.answers}">
+                                <li class="list-group-item flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1" th:text="${answer.title}"> Answer title</h5>
+                                        <small th:text="${answer.author.username}"> User's name here</small>
+                                    </div>
+                                    <p class="mb-0" th:text="${answer.content}">
+                                        Answer content.
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
