@@ -5,42 +5,45 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import wad.stackoverclone.domain.Account;
 import wad.stackoverclone.domain.Question;
+import wad.stackoverclone.repository.AccountRepository;
 import wad.stackoverclone.repository.QuestionRepository;
 import wad.stackoverclone.service.AccountService;
+import wad.stackoverclone.service.QuestionService;
 
 import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
 
 @Configuration
 @Profile("development")
 public class DevelopmentProfile {
 
     private final QuestionRepository questionRepository;
+    private final AccountRepository accountRepository;
+    private final QuestionService questionService;
     private final AccountService accountService;
 
     @Autowired
     public DevelopmentProfile(
             QuestionRepository questionRepository,
+            QuestionService questionService,
+            AccountRepository accountRepository,
             AccountService accountService) {
         this.questionRepository = questionRepository;
+        this.accountRepository = accountRepository;
+        this.questionService = questionService;
         this.accountService = accountService;
     }
 
     @PostConstruct
+    @Transactional
     public void init() {
-        createQuestions();
-        createUsers();
-    }
-
-    private void createUsers() {
-        Account admin = new Account();
-        admin.setUsername("Admin");
-        admin.setPassword("password1");
-        accountService.addAccount(admin);
-    }
-
-    private void createQuestions() {
-        questionRepository.save(QuestionCreator.zappaQuestion());
-        questionRepository.save(QuestionCreator.pandarusQuestion());
+        Account a = new Account();
+        a.setPassword("password1");
+        a.setUsername("Admin");
+        a = accountService.addAccount(a);
+        Question q = QuestionCreator.zappaQuestion();
+        q.setAuthor(a);
+        questionRepository.save(q);
     }
 
 }
