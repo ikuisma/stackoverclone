@@ -26,10 +26,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests()
+                .antMatchers("/signup")
+                .permitAll()
                 .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin()
+                .authenticated();
+        httpSecurity.formLogin()
                 .loginPage("/login")
                 .passwordParameter("password")
                 .usernameParameter("username")
