@@ -22,7 +22,10 @@ public class Account extends AbstractPersistable<Long>{
     private String password;
 
     @OneToMany(mappedBy = "author")
-    Set<Question> questions;
+    private Set<Question> questions;
+
+    @OneToMany(mappedBy = "author")
+    private Set<Answer> answers;
 
     public String getUsername() {
         return username;
@@ -47,5 +50,14 @@ public class Account extends AbstractPersistable<Long>{
     public void setQuestions(Set<Question> questions) {
         this.questions = questions;
     }
+
+    public Set<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(Set<Answer> answers) {
+        this.answers = answers;
+    }
+
 
 }
