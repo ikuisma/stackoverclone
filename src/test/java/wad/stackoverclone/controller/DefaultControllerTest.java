@@ -28,15 +28,8 @@ public class DefaultControllerTest {
     }
 
     @Test
-    public void getHomeShouldReturnStatusOk() throws Exception {
-        this.mvc.perform(get("/home"))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void getNonExistingUrlShouldRedirectToHome() throws Exception {
-        this.mvc.perform(get("/trolololo"))
-                .andExpect(redirectedUrl("/home"))
+    public void getNonExistentUrlShouldCauseRedirect() throws Exception {
+        this.mvc.perform(get("/trololol"))
                 .andExpect(status().is3xxRedirection());
     }
 

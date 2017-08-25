@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -28,8 +29,9 @@ public class QuestionsControllerTest {
     }
 
     @Test
-    public void getMessagesShouldReturnStatusOk() throws Exception{
-        this.mvc.perform(get("/questions")).andExpect(status().isOk());
+    public void getQuestionShouldReturnStatusOk() throws Exception{
+        this.mvc.perform(get("/questions"))
+                .andExpect(status().isOk());
     }
 
 }
